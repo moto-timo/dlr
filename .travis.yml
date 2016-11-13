@@ -1,0 +1,25 @@
+language: csharp
+
+env:
+  - CONFIGURATION=Release
+
+mono:
+  - latest
+
+solution: Dlr.sln
+
+script:
+  - xbuild Build.proj /t:Build "/p:Mono=true;BuildFlavour=$CONFIGURATION"
+  - pushd bin/$CONFIGURATION
+  - mono ./TestInternalDLR.exe
+
+notifications:
+  email:
+    recipients:
+      #- slide.o.mix@gmail.com
+      - ticotimo@gmail.com
+    on_success: always # default: change
+    #on_failure: [always|never|change] # default: always
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/9fdb5c75f38c850816f8
